@@ -20,6 +20,6 @@ public class Main {
         userDao.getAllUsers();
         userDao.cleanUsersTable();
         userDao.dropUsersTable();
-
+        System.out.println(userDao);
     }
 }
