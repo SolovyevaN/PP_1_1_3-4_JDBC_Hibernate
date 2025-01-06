@@ -18,4 +18,14 @@ public class Util {
           throw new RuntimeException("Ошибка подключение к базе данных" , e);
       }
    }
+
+   public static void closeConnection(Connection connection){
+      if (connection != null){
+         try {
+            connection.close();
+         } catch (SQLException e) {
+            System.out.println("Ошибка при закрытии соединения");
+         }
+      }
+   }
 }

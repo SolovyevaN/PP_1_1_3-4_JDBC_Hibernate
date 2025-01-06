@@ -28,6 +28,8 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.executeUpdate(CREATE_TABLE);
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            Util.closeConnection(Util.getConnection());
         }
     }
 
@@ -37,6 +39,8 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.executeUpdate(DROP_TABLE);
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Util.closeConnection(Util.getConnection());
         }
     }
 
@@ -50,6 +54,8 @@ public class UserDaoJDBCImpl implements UserDao {
             System.out.println("User с именем - " + name + " добавлен в базу данных");
         } catch (SQLException e){
             e.printStackTrace();
+        }finally {
+            Util.closeConnection(Util.getConnection());
         }
     }
 
@@ -60,6 +66,8 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            Util.closeConnection(Util.getConnection());
         }
     }
 
@@ -80,6 +88,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            Util.closeConnection(Util.getConnection());
         }
         return users;
     }
@@ -90,6 +100,8 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.executeUpdate(CLEAN_TABLE);
         } catch (SQLException e){
             e.printStackTrace();
+        }finally {
+            Util.closeConnection(Util.getConnection());
         }
 
     }
