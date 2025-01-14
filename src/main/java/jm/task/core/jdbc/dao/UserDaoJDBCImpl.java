@@ -28,8 +28,6 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.executeUpdate(CREATE_TABLE);
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            Util.closeConnection(Util.getConnection());
         }
     }
 
@@ -39,23 +37,24 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.executeUpdate(DROP_TABLE);
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            Util.closeConnection(Util.getConnection());
         }
     }
 
     public void saveUser(String name, String lastName, byte age) {
         try(Connection connection = Util.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SAVE_USER)){
+            PreparedStatement preparedStatement = connection.prepareStatement(SAVE_USER, Statement.RETURN_GENERATED_KEYS)){
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
             preparedStatement.executeUpdate();
-            System.out.println("User с именем - " + name + " добавлен в базу данных");
+
+            try(ResultSet generatedKey = preparedStatement.getGeneratedKeys()){
+                if (generatedKey.next()){
+                    long id = generatedKey.getLong(1);
+                }
+            }
         } catch (SQLException e){
             e.printStackTrace();
-        }finally {
-            Util.closeConnection(Util.getConnection());
         }
     }
 
@@ -66,8 +65,6 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            Util.closeConnection(Util.getConnection());
         }
     }
 
@@ -88,8 +85,6 @@ public class UserDaoJDBCImpl implements UserDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            Util.closeConnection(Util.getConnection());
         }
         return users;
     }
@@ -100,9 +95,6 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.executeUpdate(CLEAN_TABLE);
         } catch (SQLException e){
             e.printStackTrace();
-        }finally {
-            Util.closeConnection(Util.getConnection());
         }
-
     }
 }
