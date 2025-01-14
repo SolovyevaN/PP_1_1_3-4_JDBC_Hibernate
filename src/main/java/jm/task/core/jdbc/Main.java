@@ -9,23 +9,21 @@ public class Main {
     public static void main(String[] args) {
 
         UserDao userDao = new UserDaoJDBCImpl();
-
         userDao.createUsersTable();
-
-        userDao.saveUser("Petya", "Ivanov", (byte) 20);
+        userDao.saveUser(new User(1L, "Petya", "Ivanov", (byte) 20));
         System.out.println("User с именем Petya добавлен в базу.");
-        userDao.saveUser("Zina", "Petrova", (byte) 25);
+        userDao.saveUser(new User(2L, "Zina", "Petrova", (byte) 25));
         System.out.println("User с именем Zina добавлен в базу.");
-        userDao.saveUser("Kolya", "Pupkin", (byte) 31);
+        userDao.saveUser(new User(3l, "Kolya", "Pupkin", (byte) 31));
         System.out.println("User с именем Kolya добавлен в базу.");
-        userDao.saveUser("Max", "Sidorov", (byte) 38);
+        userDao.saveUser(new User(4L, "Max", "Sidorov", (byte) 38));
         System.out.println("User с именем Max добавлен в базу.");
 
         userDao.removeUserById(1);
         System.out.println("User с ID = 1 удален из базы.");
 
         System.out.println("Список всех пользователей в базе:");
-        for (User user : userDao.getAllUsers()){
+        for (User user : userDao.getAllUsers()) {
             System.out.println(user);
         }
 
